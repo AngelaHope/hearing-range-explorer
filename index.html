@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hearing Range Explorer</title>
+  <meta name="description" content="Test the range of pitches you can hear and see which part of your inner ear senses each one.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-text">
+      <h1>Where in your ear does a sound land?</h1>
+      <p class="lede">Your cochlea is a snail-shaped tube lined with about 15,000 hair cells. High pitches shake the hair cells near its entrance; low pitches travel all the way to the centre. Play a tone and watch where it lands.</p>
+      <div class="explore">
+        <label for="freq">Pitch <output id="freq-out">1,000 Hz</output></label>
+        <input id="freq" type="range" min="0" max="1000" value="566" aria-describedby="freq-help">
+        <p id="freq-help" class="help">From 20 Hz (a deep rumble) to 20,000 Hz (a thin whine).</p>
+        <button id="play-toggle" class="btn primary" type="button">Play tone</button>
+      </div>
+    </div>
+    <figure class="cochlea-wrap">
+      <svg id="cochlea" viewBox="-160 -160 320 320" role="img" aria-labelledby="cochlea-title">
+        <title id="cochlea-title">The cochlea spiral seen from above, with a marker at the place that responds to the current pitch</title>
+      </svg>
+      <figcaption>The cochlea, seen from above. Its entrance (outer end) senses high pitches; its tip (centre) senses low ones.</figcaption>
+    </figure>
+  </header>
+
+  <main>
+    <section class="volume-note" aria-labelledby="volume-title">
+      <h2 id="volume-title">Before you start</h2>
+      <p>Use headphones if you can, and start quiet. Set your device volume to about a third, then raise the slider below only until you can just hear the 1,000 Hz tone.</p>
+      <label for="volume">Tone volume <output id="volume-out">10%</output></label>
+      <input id="volume" type="range" min="1" max="40" value="10">
+    </section>
+
+    <section class="test" aria-labelledby="test-title">
+      <h2 id="test-title">Find your hearing range</h2>
+      <p>You'll hear 15 tones, from low to very high. For each one, say whether you heard it.</p>
+
+      <div id="test-start">
+        <button id="start-test" class="btn primary" type="button">Start the test</button>
+      </div>
+
+      <div id="test-step" hidden>
+        <p class="step-count" id="step-count">Tone 1 of 15</p>
+        <p class="step-freq" id="step-freq" aria-live="polite">125 Hz</p>
+        <div class="step-actions">
+          <button id="replay" class="btn" type="button">Play again</button>
+          <button id="heard" class="btn heard" type="button">I heard it</button>
+          <button id="missed" class="btn missed" type="button">I heard nothing</button>
+        </div>
+      </div>
+
+      <div id="results" hidden>
+        <p class="result-line" id="result-line" aria-live="polite"></p>
+        <svg id="chart" viewBox="0 0 640 170" role="img" aria-labelledby="chart-title">
+          <title id="chart-title">Each tested pitch, marked as heard or not heard, on a scale from 20 Hz to 20,000 Hz</title>
+        </svg>
+        <div class="legend">
+          <span><i class="dot heard-dot"></i>Heard</span>
+          <span><i class="dot missed-dot"></i>Not heard</span>
+        </div>
+        <button id="restart" class="btn" type="button">Test again</button>
+      </div>
+    </section>
+
+    <section class="facts" aria-labelledby="facts-title">
+      <h2 id="facts-title">Reading your result</h2>
+      <dl>
+        <dt>Healthy young ears</dt>
+        <dd>The textbook range is roughly 20 to 20,000 Hz. Few adults reach either end.</dd>
+        <dt>Age</dt>
+        <dd>The hair cells at the cochlea's entrance take the most wear, so the top of the range shrinks with age. This is called presbycusis.</dd>
+        <dt>Noise</dt>
+        <dd>Loud music and machinery damage hair cells, often first around 3,000 to 6,000 Hz. Hair cells in humans don't grow back.</dd>
+        <dt>Your equipment</dt>
+        <dd>Many phone and laptop speakers can't play below about 100 Hz or above about 16,000 Hz. A "not heard" at the extremes may be your speaker, not your ear.</dd>
+      </dl>
+      <p class="disclaimer">This is a learning tool, not a medical hearing test. If you're worried about your hearing, see an audiologist.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Built by <a href="https://github.com/angelahope">Angela</a> with the Web Audio API. <a href="https://github.com/angelahope/hearing-range-explorer">View the code</a>.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

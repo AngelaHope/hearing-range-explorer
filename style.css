@@ -1,0 +1,154 @@
+:root {
+  --paper: #e8eef3;
+  --grid: #c9d5df;
+  --ink: #1b2a41;
+  --ink-soft: #4a5a72;
+  --heard: #0f7c7a;
+  --missed: #b4236c;
+  --surface: #f6f9fb;
+  --font: "Atkinson Hyperlegible", system-ui, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #142033;
+    --grid: #2a3a52;
+    --ink: #e4ecf4;
+    --ink-soft: #a7b6c9;
+    --heard: #3fc1bd;
+    --missed: #ec6aa8;
+    --surface: #1b2a41;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  color: var(--ink);
+  background-color: var(--paper);
+  /* faint audiogram grid */
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+h1, h2 { line-height: 1.15; margin: 0 0 0.6em; }
+h1 { font-size: clamp(2.1rem, 5vw, 3.4rem); font-weight: 700; letter-spacing: -0.01em; }
+h2 { font-size: 1.5rem; }
+p { margin: 0 0 1em; max-width: 62ch; }
+a { color: inherit; text-underline-offset: 3px; }
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: center;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: clamp(2.5rem, 7vw, 6rem) 1rem 3rem;
+}
+
+.lede { font-size: 1.2rem; color: var(--ink-soft); }
+
+.explore { margin-top: 1.8rem; }
+
+label { display: flex; justify-content: space-between; font-weight: 700; max-width: 30rem; }
+output { font-variant-numeric: tabular-nums; color: var(--heard); }
+.help { font-size: 0.95rem; color: var(--ink-soft); margin: 0.3em 0 1.2em; }
+
+input[type="range"] {
+  width: 100%;
+  max-width: 30rem;
+  accent-color: var(--heard);
+  height: 2rem;
+}
+
+.cochlea-wrap { margin: 0; }
+#cochlea { width: 100%; max-width: 460px; display: block; margin: 0 auto; overflow: visible; }
+.cochlea-wrap figcaption { font-size: 0.95rem; color: var(--ink-soft); text-align: center; max-width: 34ch; margin: 0.8rem auto 0; }
+
+.spiral-track { fill: none; stroke: var(--grid); stroke-width: 30; stroke-linecap: round; }
+.spiral-band { fill: none; stroke: var(--surface); stroke-width: 22; stroke-linecap: round; }
+.spiral-tick { fill: var(--ink-soft); font-size: 11px; font-family: var(--font); }
+.marker-glow { fill: var(--heard); opacity: 0.25; }
+.marker { fill: var(--heard); stroke: var(--surface); stroke-width: 3; }
+.playing .marker-glow { animation: pulse 0.9s ease-in-out infinite; }
+
+@keyframes pulse {
+  0%, 100% { r: 16; opacity: 0.25; }
+  50% { r: 24; opacity: 0.1; }
+}
+
+main { max-width: 1120px; margin: 0 auto; padding: 0 1rem 3rem; }
+
+main > section {
+  background: var(--surface);
+  border: 1px solid var(--grid);
+  border-radius: 6px;
+  padding: clamp(1.25rem, 3vw, 2.25rem);
+  margin-bottom: 1.5rem;
+}
+
+.btn {
+  font: inherit;
+  font-weight: 700;
+  padding: 0.75rem 1.3rem;
+  border-radius: 999px;
+  border: 2px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  min-height: 48px;
+}
+.btn:hover { background: var(--paper); }
+.btn.primary { background: var(--ink); color: var(--surface); }
+.btn.primary:hover { background: var(--ink-soft); border-color: var(--ink-soft); }
+.btn.heard { border-color: var(--heard); color: var(--heard); }
+.btn.missed { border-color: var(--missed); color: var(--missed); }
+.btn:focus-visible, input:focus-visible { outline: 3px solid var(--missed); outline-offset: 3px; }
+
+.step-count { color: var(--ink-soft); margin: 0; }
+.step-freq { font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 700; margin: 0 0 1rem; font-variant-numeric: tabular-nums; }
+.step-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+.result-line { font-size: 1.25rem; }
+#chart { width: 100%; display: block; margin: 0.5rem 0 0.75rem; }
+#chart .axis { stroke: var(--ink-soft); stroke-width: 1; }
+#chart .gridline { stroke: var(--grid); stroke-width: 1; }
+#chart text { fill: var(--ink-soft); font-size: 12px; font-family: var(--font); }
+#chart .range { fill: var(--heard); opacity: 0.15; }
+.heard-mark { fill: var(--heard); }
+.missed-mark { fill: none; stroke: var(--missed); stroke-width: 2.5; }
+
+.legend { display: flex; gap: 1.5rem; margin-bottom: 1.2rem; font-size: 0.95rem; }
+.dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 0.4rem; vertical-align: -1px; }
+.heard-dot { background: var(--heard); }
+.missed-dot { border: 2.5px solid var(--missed); }
+
+dl { display: grid; grid-template-columns: 12rem 1fr; gap: 0.6rem 1.5rem; margin: 0 0 1.5rem; }
+dt { font-weight: 700; }
+dd { margin: 0; max-width: 62ch; }
+.disclaimer { font-size: 0.95rem; color: var(--ink-soft); }
+
+footer { text-align: center; padding: 1rem 1rem 3rem; color: var(--ink-soft); font-size: 0.95rem; }
+footer p { margin: 0 auto; }
+
+@media (max-width: 760px) {
+  .hero { grid-template-columns: 1fr; }
+  .cochlea-wrap { order: -1; }
+  #cochlea { max-width: 300px; }
+  dl { grid-template-columns: 1fr; }
+  dt { margin-top: 0.6rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .playing .marker-glow { animation: none; }
+  * { transition: none !important; }
+}
